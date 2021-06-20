@@ -9,25 +9,27 @@ final LinkedHashMap<DateTime, List<Appointment>> appointments =
       ..addAll({
         DateTime.now(): [
           Appointment(
-              dateTime: DateTime.now(),
+              dateTime: DateTime.now().add(
+                Duration(hours: 2),
+              ),
               patient: Patient(
                 name: "Rakesh",
               ),
               title: 'Gastrointestinal Disease',
               about: 'lorem ipsum'),
-        ],
-        DateTime.utc(2021, 6, 6): [
           Appointment(
-              dateTime: DateTime.utc(2021, 6, 6),
+              dateTime: DateTime.now().add(
+                Duration(minutes: 15),
+              ),
               patient: Patient(
                 name: "Goutam",
               ),
               title: 'Abdominal pain diagnosis',
               about: 'lorem ipsum'),
-        ],
-        DateTime.utc(2021, 5, 5): [
           Appointment(
-              dateTime: DateTime.utc(2021, 5, 5),
+              dateTime: DateTime.now().subtract(
+                Duration(hours: 2),
+              ),
               patient: Patient(
                 name: "Lalith",
               ),

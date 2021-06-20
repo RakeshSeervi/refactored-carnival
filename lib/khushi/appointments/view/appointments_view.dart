@@ -69,6 +69,9 @@ class _AppointmentsViewState extends State<AppointmentsView> {
               upcoming.add(apt);
             else
               completed.add(apt);
+          upcoming.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+          completed.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
           return Padding(
             padding:
                 const EdgeInsets.only(left: 28.0, right: 28.0, bottom: 28.0),
@@ -130,39 +133,42 @@ class _AppointmentsViewState extends State<AppointmentsView> {
                   }),
                 ),
                 Expanded(
-                  child: ListView(
-                    children: [
-                      if (upcoming.length > 0) ...[
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 24.0, bottom: 8.0),
-                          child: Text(
-                            'Upcoming Appointments',
-                            style: TextStyle(
-                              color: Color(0xFFAFB7C2),
-                              fontWeight: FontWeight.w500,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ListView(
+                      children: [
+                        if (upcoming.length > 0) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                            child: Text(
+                              'Upcoming Appointments',
+                              style: TextStyle(
+                                color: Color(0xFFAFB7C2),
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        for (Appointment appointment in upcoming)
-                          AppointmentContainer(appointment: appointment),
-                      ],
-                      if (completed.length > 0) ...[
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 24.0, bottom: 8.0),
-                          child: Text(
-                            'Completed Appointments',
-                            style: TextStyle(
-                              color: Color(0xFFAFB7C2),
-                              fontWeight: FontWeight.w500,
+                          for (Appointment appointment in upcoming)
+                            AppointmentContainer(appointment: appointment),
+                        ],
+                        if (completed.length > 0) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                            child: Text(
+                              'Completed Appointments',
+                              style: TextStyle(
+                                color: Color(0xFFAFB7C2),
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        for (Appointment appointment in completed)
-                          AppointmentContainer(appointment: appointment),
+                          for (Appointment appointment in completed)
+                            AppointmentContainer(appointment: appointment),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
                 GradientButton(
@@ -215,7 +221,9 @@ class AppointmentContainer extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '11:00am',
+                  DateFormat("h:mma")
+                      .format(appointment.dateTime)
+                      .toLowerCase(),
                   style: TextStyle(
                     color: Color(0xFF1A1A1A),
                     fontWeight: FontWeight.bold,
@@ -232,7 +240,7 @@ class AppointmentContainer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Gastrointestinal Disease',
+                  appointment.title,
                   style: TextStyle(
                     color: Color(0xFF1A1A1A),
                     fontWeight: FontWeight.w500,

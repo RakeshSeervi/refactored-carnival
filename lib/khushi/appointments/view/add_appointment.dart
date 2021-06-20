@@ -72,8 +72,8 @@ class _AddAppointmentFormState extends State<AddAppointmentForm> {
                       border: OutlineInputBorder(),
                       hintText: 'Gastrointerstinal disease'),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Title cannot be empty';
                     }
                     return null;
                   },
@@ -98,8 +98,8 @@ class _AddAppointmentFormState extends State<AddAppointmentForm> {
                     hintText: 'lorem ipsum',
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter some description';
                     }
                     return null;
                   }),
@@ -117,7 +117,7 @@ class _AddAppointmentFormState extends State<AddAppointmentForm> {
                           AddAppointment(
                             appointment: Appointment(
                                 dateTime:
-                                    DateTime.now().add(Duration(hours: 2)),
+                                    DateTime.now().add(Duration(minutes: 30)),
                                 patient: p,
                                 title: titleController.text,
                                 about: aboutController.text),
