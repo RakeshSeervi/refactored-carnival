@@ -1,6 +1,7 @@
 import 'package:bloc_counter/khushi/appointments/bloc/appointments_bloc.dart';
 import 'package:bloc_counter/khushi/appointments/view/add_appointment.dart';
 import 'package:bloc_counter/khushi/appointments/view/appointments_view.dart';
+import 'package:bloc_counter/khushi/appointments/view/select_date_time.dart';
 import 'package:bloc_counter/khushi/appointments/view/select_patient.dart';
 import 'package:bloc_counter/khushi/constants.dart';
 import 'package:bloc_counter/khushi/patients/bloc/patients_bloc.dart';
@@ -36,6 +37,7 @@ class Khushi extends StatelessWidget {
           AppointmentsView.routeName: (_) => AppointmentsView(),
           AddAppointmentForm.routeName: (_) => AddAppointmentForm(),
           SelectPatient.routeName: (_) => SelectPatient(),
+          SelectDateTime.routeName: (_) => SelectDateTime(),
         },
         initialRoute: AppointmentsView.routeName,
       ),

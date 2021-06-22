@@ -1,7 +1,6 @@
 import 'package:bloc_counter/khushi/appointments/bloc/appointments_bloc.dart';
 import 'package:bloc_counter/khushi/appointments/view/appointments_view.dart';
 import 'package:bloc_counter/khushi/constants.dart';
-import 'package:bloc_counter/khushi/patients/patient.dart';
 import 'package:bloc_counter/khushi/widgets/back_button.dart';
 import 'package:bloc_counter/khushi/widgets/gradient_button.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class _AddAppointmentFormState extends State<AddAppointmentForm> {
 
   @override
   Widget build(BuildContext context) {
-    Patient p = ModalRoute.of(context)!.settings.arguments as Patient;
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
 
     return Scaffold(
       appBar: AppBar(
@@ -116,11 +115,11 @@ class _AddAppointmentFormState extends State<AddAppointmentForm> {
                     context.read<AppointmentsBloc>().add(
                           AddAppointment(
                             appointment: Appointment(
-                                dateTime:
-                                    DateTime.now().add(Duration(minutes: 30)),
-                                patient: p,
-                                title: titleController.text,
-                                about: aboutController.text),
+                              dateTime: args['dateTime'],
+                              patient: args['patient'],
+                              title: titleController.text,
+                              about: aboutController.text,
+                            ),
                           ),
                         );
                     Navigator.of(context).popUntil(

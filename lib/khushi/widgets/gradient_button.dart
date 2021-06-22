@@ -11,10 +11,13 @@ class GradientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8))),
       padding: const EdgeInsets.all(0),
       color: secondaryColor,
       child: Ink(
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           gradient: LinearGradient(
             colors: [
               accentColor,

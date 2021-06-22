@@ -1,4 +1,4 @@
-import 'package:bloc_counter/khushi/appointments/view/add_appointment.dart';
+import 'package:bloc_counter/khushi/appointments/view/select_date_time.dart';
 import 'package:bloc_counter/khushi/constants.dart';
 import 'package:bloc_counter/khushi/patients/bloc/patients_bloc.dart';
 import 'package:bloc_counter/khushi/patients/patient.dart';
@@ -121,8 +121,9 @@ class PatientTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(AddAppointmentForm.routeName, arguments: patient);
+          Navigator.of(context).pushNamed(SelectDateTime.routeName, arguments: {
+            'patient': patient,
+          });
         },
         child: Text(
           patient.name,

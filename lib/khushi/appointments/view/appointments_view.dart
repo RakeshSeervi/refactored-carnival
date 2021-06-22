@@ -107,30 +107,31 @@ class _AppointmentsViewState extends State<AppointmentsView> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  calendarBuilders:
-                      CalendarBuilders(selectedBuilder: (_, d1, d2) {
-                    return Center(
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [
-                                accentColor,
-                                secondaryColor,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            )),
-                        child: Text(
-                          d1.day.toString(),
-                          style: TextStyle(color: Colors.white),
+                  calendarBuilders: CalendarBuilders(
+                    selectedBuilder: (_, d1, d2) {
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [
+                                  accentColor,
+                                  secondaryColor,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              )),
+                          child: Text(
+                            d1.day.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
                 ),
                 Expanded(
                   child: Padding(
