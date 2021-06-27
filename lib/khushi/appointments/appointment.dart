@@ -6,11 +6,12 @@ class Appointment {
   final String title;
   final String about;
 
-  const Appointment(
-      {required this.dateTime,
-      required this.patient,
-      required this.title,
-      required this.about});
+  const Appointment({
+    required this.dateTime,
+    required this.patient,
+    required this.title,
+    required this.about,
+  });
 
   @override
   String toString() {

@@ -11,13 +11,24 @@ class GradientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8))),
-      padding: const EdgeInsets.all(0),
       color: secondaryColor,
+      padding: const EdgeInsets.all(
+        0.0,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            8.0,
+          ),
+        ),
+      ),
       child: Ink(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              8.0,
+            ),
+          ),
           gradient: LinearGradient(
             colors: [
               accentColor,
@@ -29,7 +40,9 @@ class GradientButton extends StatelessWidget {
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(
+              16.0,
+            ),
             child: Text(
               label,
               style: TextStyle(

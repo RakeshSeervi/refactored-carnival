@@ -4,10 +4,10 @@ abstract class AppointmentsEvent extends Equatable {
   const AppointmentsEvent();
 }
 
-class AddAppointment extends AppointmentsEvent {
+class AppointmentAdded extends AppointmentsEvent {
   final Appointment appointment;
 
-  const AddAppointment({required this.appointment}) : super();
+  const AppointmentAdded({required this.appointment}) : super();
 
   @override
   List<Object?> get props => [appointment];

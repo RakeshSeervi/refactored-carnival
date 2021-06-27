@@ -33,6 +33,15 @@ class Khushi extends StatelessWidget {
           primaryColor: primaryColor,
           accentColor: accentColor,
         ),
+        builder: (BuildContext context, Widget? widget) {
+          final MediaQueryData data = MediaQuery.of(context);
+          return MediaQuery(
+            data: data.copyWith(
+              textScaleFactor: 1,
+            ),
+            child: widget ?? Container(),
+          );
+        },
         routes: {
           AppointmentsView.routeName: (_) => AppointmentsView(),
           AddAppointmentForm.routeName: (_) => AddAppointmentForm(),
