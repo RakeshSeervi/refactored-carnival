@@ -24,8 +24,6 @@ class _SelectDateTimeState extends State<SelectDateTime> {
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   String period = DateFormat('a').format(DateTime.now());
-  String _hourErrorMessage = '';
-  String _minutesErrorMessage = '';
 
   final _formKey = GlobalKey<FormState>();
   final hourController = TextEditingController();
@@ -176,182 +174,196 @@ class _SelectDateTimeState extends State<SelectDateTime> {
             Form(
               key: _formKey,
               autovalidateMode: _autovalidateMode,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 40.0,
-                    child: TextFormField(
-                      controller: hourController,
-                      keyboardType: TextInputType.number,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      maxLength: 2,
-                      textAlign: TextAlign.center,
-                      focusNode: hourFocusNode,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: 'hh',
-                        errorStyle: TextStyle(
-                          height: 0.0,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        final hours = int.tryParse(value);
-                        if (hours != null && hours > 1) {
-                          hourFocusNode.unfocus();
-                          minutesFocusNode.requestFocus();
-                        }
-                      },
-                      validator: (value) {
-                        final hours = int.tryParse(value ?? '');
-                        _hourErrorMessage = '';
-                        if (value == null ||
-                            hours == null ||
-                            hours < 1 ||
-                            hours > 12)
-                          _hourErrorMessage = 'Hours should range from 1 to 12';
-
-                        return _hourErrorMessage == ''
-                            ? null
-                            : _hourErrorMessage;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                    ),
-                    child: Text(
-                      ':',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 40.0,
-                    child: TextFormField(
-                      controller: minutesController,
-                      keyboardType: TextInputType.number,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      maxLength: 2,
-                      textAlign: TextAlign.center,
-                      focusNode: minutesFocusNode,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: 'mm',
-                        errorStyle: TextStyle(
-                          height: 0.0,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 2) minutesFocusNode.unfocus();
-                      },
-                      validator: (value) {
-                        final minutes = int.tryParse(value ?? '');
-                        _minutesErrorMessage = '';
-                        if (value == null ||
-                            minutes == null ||
-                            minutes < 0 ||
-                            minutes > 59)
-                          _minutesErrorMessage =
-                              'Minutes should range from 1 to 59';
-
-                        return _minutesErrorMessage == ''
-                            ? null
-                            : _minutesErrorMessage;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                    ),
-                    child: Column(
+              child: FormField(
+                builder: (state) => Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 16.0,
-                          width: 32.0,
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                period = 'AM';
-                              });
-                            },
-                            style: ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                              minimumSize: MaterialStateProperty.all(Size.zero),
+                          width: 40.0,
+                          child: TextFormField(
+                            controller: hourController,
+                            keyboardType: TextInputType.number,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            maxLength: 2,
+                            textAlign: TextAlign.center,
+                            focusNode: hourFocusNode,
+                            style: TextStyle(
+                              fontSize: 18.0,
                             ),
-                            child: Text(
-                              'AM',
-                              style: TextStyle(
-                                fontSize: 10.0,
-                                color: period == 'AM'
-                                    ? Colors.black
-                                    : Color(0xFFAFB7C2),
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: 'hh',
+                              errorStyle: TextStyle(
+                                height: 0.0,
                               ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              state.didChange(
+                                  '0' * (2 - hourController.text.length) +
+                                      hourController.text +
+                                      (minutesController.text.length == 0
+                                          ? '99'
+                                          : '0' + minutesController.text));
+                              final hours = int.tryParse(value);
+                              if (hours != null && hours > 1) {
+                                hourFocusNode.unfocus();
+                                minutesFocusNode.requestFocus();
+                              }
+                            },
+                            validator: (value) {
+                              final hours = int.tryParse(value ?? '');
+                              if (hours == null || hours < 1 || hours > 12)
+                                return '';
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                          ),
+                          child: Text(
+                            ':',
+                            style: TextStyle(
+                              fontSize: 18.0,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 16.0,
-                          width: 32.0,
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                period = 'PM';
-                              });
-                            },
-                            style: ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                              minimumSize: MaterialStateProperty.all(Size.zero),
+                          width: 40.0,
+                          child: TextFormField(
+                            controller: minutesController,
+                            keyboardType: TextInputType.number,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            maxLength: 2,
+                            textAlign: TextAlign.center,
+                            focusNode: minutesFocusNode,
+                            style: TextStyle(
+                              fontSize: 18.0,
                             ),
-                            child: Text(
-                              'PM',
-                              style: TextStyle(
-                                fontSize: 10.0,
-                                color: period == 'PM'
-                                    ? Colors.black
-                                    : Color(0xFFAFB7C2),
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: 'mm',
+                              errorStyle: TextStyle(
+                                height: 0.0,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
+                            onChanged: (value) {
+                              state.didChange(
+                                  '0' * (2 - hourController.text.length) +
+                                      hourController.text +
+                                      (minutesController.text.length == 0
+                                          ? '99'
+                                          : '0' + minutesController.text));
+                              if (value.length == 2) minutesFocusNode.unfocus();
+                            },
+                            validator: (value) {
+                              final minutes = int.tryParse(value ?? '');
+                              if (minutes == null ||
+                                  minutes < 0 ||
+                                  minutes > 59) return '';
+                            },
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 16.0,
+                                width: 32.0,
+                                child: TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      period = 'AM';
+                                    });
+                                  },
+                                  style: ButtonStyle(
+                                    visualDensity: VisualDensity.compact,
+                                    minimumSize:
+                                        MaterialStateProperty.all(Size.zero),
+                                  ),
+                                  child: Text(
+                                    'AM',
+                                    style: TextStyle(
+                                      fontSize: 10.0,
+                                      color: period == 'AM'
+                                          ? Colors.black
+                                          : Color(0xFFAFB7C2),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 16.0,
+                                width: 32.0,
+                                child: TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      period = 'PM';
+                                    });
+                                  },
+                                  style: ButtonStyle(
+                                    visualDensity: VisualDensity.compact,
+                                    minimumSize:
+                                        MaterialStateProperty.all(Size.zero),
+                                  ),
+                                  child: Text(
+                                    'PM',
+                                    style: TextStyle(
+                                      fontSize: 10.0,
+                                      color: period == 'PM'
+                                          ? Colors.black
+                                          : Color(0xFFAFB7C2),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
+                    if (state.hasError)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                        ),
+                        child: Text(
+                          state.errorText!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                validator: (String? value) {
+                  final hours =
+                      int.tryParse(value != null ? value.substring(0, 2) : ' ');
+                  final minutes =
+                      int.tryParse(value != null ? value.substring(2) : ' ');
+                  if (hours == null || hours < 1 || hours > 12)
+                    return 'Hours should range from 1 to 12';
+                  if (minutes == null || minutes < 0 || minutes > 59)
+                    return 'Minutes should range from 0 to 59';
+                },
               ),
             ),
-            if ((_hourErrorMessage + _minutesErrorMessage).length > 0)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                ),
-                child: Text(
-                  _hourErrorMessage + '\n' + _minutesErrorMessage,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-              ),
             Spacer(),
             Text(
               'Past appointments can also be added.',
@@ -361,10 +373,10 @@ class _SelectDateTimeState extends State<SelectDateTime> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                28,
-                16,
-                28,
-                28,
+                28.0,
+                16.0,
+                28.0,
+                28.0,
               ),
               child: GradientButton(
                 label: 'Continue',
